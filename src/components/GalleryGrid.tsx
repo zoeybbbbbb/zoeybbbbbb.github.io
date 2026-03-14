@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Lightbox from './Lightbox';
 
 interface Artwork {
   title: string;
@@ -19,12 +20,25 @@ interface GalleryGridProps {
 
 export default function GalleryGrid({ artworks, categories }: GalleryGridProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>('全部');
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const categoryNames = ['全部', ...categories.map(c => c.name)];
 
   const filteredArtworks = selectedCategory === '全部'
     ? artworks
     : artworks.filter(art => art.category === selectedCategory);
+
+  const openLightbox = (index: number) => {
+    setLightboxIndex(index);
+  };
+
+  const closeLightbox = () => {
+    setLightboxIndex(null);
+  };
+
+  const navigateLightbox = (index: number) => {
+    setLightboxIndex(index);
+  };
 
   return (
     <div>
@@ -50,6 +64,7 @@ export default function GalleryGrid({ artworks, categories }: GalleryGridProps) 
           <div
             key={index}
             className="aspect-square bg-gray-100 rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition-shadow"
+            onClick={() => openLightbox(index)}
           >
             {artwork.type === 'video' ? (
               <video
@@ -80,6 +95,16 @@ export default function GalleryGrid({ artworks, categories }: GalleryGridProps) 
 
       {filteredArtworks.length === 0 && (
         <p className="text-gray-500 text-center py-12">该分类下暂无作品</p>
+      )}
+
+      {lightboxIndex !== null && (
+        <Lightbox
+          artwork={filteredArtworks[lightboxIndex]}
+          artworks={filteredArtworks}
+          currentIndex={lightboxIndex}
+          onClose={closeLightbox}
+          onNavigate={navigateLightbox}
+        />
       )}
     </div>
   );
