@@ -1,36 +1,48 @@
 ---
 // 引入组件
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
 ---
-<!DOCTYPE html>
+
+<!doctype html>
 <html lang="zh-cn">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Museum</title>
-  <link rel="icon" href="/favicon.ico" />
-  <style>
-    body { font-family: sans-serif; margin: 0; padding: 0; background-color: #fff; }
-    main { padding: 20px; text-align: center; }
-    img { max-width: 300px; margin: 10px; border: 2px solid #ccc; }
-  </style>
-</head>
-<body>
-  <Header />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Museum</title>
+    <link rel="icon" href="/favicon.ico" />
+    <style>
+      body {
+        font-family: sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #fff;
+      }
+      main {
+        padding: 20px;
+        text-align: center;
+      }
+      img {
+        max-width: 300px;
+        margin: 10px;
+        border: 2px solid #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <Header />
 
-  <main>
-    <h2>Welcome to My Museum</h2>
-    <p>Here you can showcase your artworks.</p>
+    <main>
+      <h2>Welcome to My Museum</h2>
+      <p>Here you can showcase your artworks.</p>
 
-    <h2>Gallery</h2>
-    <!-- 示例图片展示 -->
-    <img src="/images/artwork1.jpg" alt="Artwork 1" />
-    <img src="/images/artwork2.jpg" alt="Artwork 2" />
-    <img src="/images/artwork3.jpg" alt="Artwork 3" />
+      <h2>Gallery</h2>
+      <!-- 示例图片展示 -->
+      <img src="/images/artwork1.jpg" alt="Artwork 1" />
+      <img src="/images/artwork2.jpg" alt="Artwork 2" />
+      <img src="/images/artwork3.jpg" alt="Artwork 3" />
+    </main>
 
-  </main>
-
-  <Footer />
-</body>
+    <Footer />
+  </body>
 </html>
