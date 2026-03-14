@@ -9,7 +9,11 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "install:force": "npm install --legacy-peer-deps"
+  },
+  "overrides": {
+    "astro": "$astro"
   },
   "dependencies": {
     "@astrojs/react": "^5.0.0",
