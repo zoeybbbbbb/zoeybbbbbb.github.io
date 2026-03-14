@@ -4,32 +4,32 @@ interface Artwork {
   title: string;
   src: string;
   type: 'image' | 'video';
+  category: string;
+}
+
+interface Category {
+  name: string;
+  count: number;
 }
 
 interface GalleryGridProps {
   artworks: Artwork[];
+  categories: Category[];
 }
 
-export default function GalleryGrid({ artworks }: GalleryGridProps) {
+export default function GalleryGrid({ artworks, categories }: GalleryGridProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>('全部');
 
-  const categories = ['全部', '动物', '风景', '人物', '创意'];
-
-  const categoryMap: Record<string, string[]> = {
-    '动物': ['小猫钓鱼', '大象', '海底世界'],
-    '风景': ['日落', '山川'],
-    '人物': ['我的家人'],
-    '创意': ['未来城市'],
-  };
+  const categoryNames = ['全部', ...categories.map(c => c.name)];
 
   const filteredArtworks = selectedCategory === '全部'
     ? artworks
-    : artworks.filter(art => categoryMap[selectedCategory]?.includes(art.title));
+    : artworks.filter(art => art.category === selectedCategory);
 
   return (
     <div>
       <div className="flex flex-wrap gap-2 mb-6">
-        {categories.map(cat => (
+        {categoryNames.map(cat => (
           <button
             key={cat}
             onClick={() => setSelectedCategory(cat)}
@@ -40,6 +40,7 @@ export default function GalleryGrid({ artworks }: GalleryGridProps) {
             }`}
           >
             {cat}
+            {cat !== '全部' && ` (${categories.find(c => c.name === cat)?.count || 0})`}
           </button>
         ))}
       </div>
@@ -50,15 +51,29 @@ export default function GalleryGrid({ artworks }: GalleryGridProps) {
             key={index}
             className="aspect-square bg-gray-100 rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition-shadow"
           >
-            <img
-              src={artwork.src}
-              alt={artwork.title}
-              className="w-full h-full object-cover"
-              onError={(e) => {
-                e.currentTarget.style.display = 'none';
-                e.currentTarget.parentElement!.innerHTML = `<div class="w-full h-full flex items-center justify-center text-gray-400 text-sm p-4 text-center">${artwork.title}</div>`;
-              }}
-            />
+            {artwork.type === 'video' ? (
+              <video
+                src={artwork.src}
+                className="w-full h-full object-cover"
+                muted
+                playsInline
+                onMouseOver={e => e.currentTarget.play()}
+                onMouseOut={e => {
+                  e.currentTarget.pause();
+                  e.currentTarget.currentTime = 0;
+                }}
+              />
+            ) : (
+              <img
+                src={artwork.src}
+                alt={artwork.title}
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                  e.currentTarget.parentElement!.innerHTML = `<div class="w-full h-full flex items-center justify-center text-gray-400 text-sm p-4 text-center">${artwork.title}</div>`;
+                }}
+              />
+            )}
           </div>
         ))}
       </div>

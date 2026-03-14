@@ -2,10 +2,9 @@
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import GalleryGrid from "../../components/GalleryGrid";
-import { getGalleryStructure } from "../../utils/gallery";
+import { scanGallery } from "../../utils/gallery";
 
-const { categories, artworks } = getGalleryStructure();
-const allArtworks = Object.values(artworks).flat();
+const { categories, artworks } = scanGallery();
 ---
 
 <!doctype html>
@@ -21,7 +20,7 @@ const allArtworks = Object.values(artworks).flat();
 
     <main class="flex-1 max-w-6xl mx-auto px-4 py-8 w-full">
       <h2 class="text-2xl font-bold text-gray-800 mb-6">所有作品</h2>
-      <GalleryGrid artworks={allArtworks} client:load />
+      <GalleryGrid categories={categories} artworks={artworks} client:load />
     </main>
 
     <Footer />
