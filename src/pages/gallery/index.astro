@@ -1,0 +1,29 @@
+---
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import GalleryGrid from "../../components/GalleryGrid";
+import { getGalleryStructure } from "../../utils/gallery";
+
+const { categories, artworks } = getGalleryStructure();
+const allArtworks = Object.values(artworks).flat();
+---
+
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>作品集 - Zoey's Art Gallery</title>
+    <link rel="icon" href="/favicon.ico" />
+  </head>
+  <body class="min-h-screen flex flex-col bg-white">
+    <Header />
+
+    <main class="flex-1 max-w-6xl mx-auto px-4 py-8 w-full">
+      <h2 class="text-2xl font-bold text-gray-800 mb-6">所有作品</h2>
+      <GalleryGrid artworks={allArtworks} client:load />
+    </main>
+
+    <Footer />
+  </body>
+</html>

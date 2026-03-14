@@ -1,5 +1,4 @@
 ---
-// 引入组件
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 ---
@@ -9,38 +8,20 @@ import Footer from "../components/Footer.astro";
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Museum</title>
+    <title>Zoey's Art Gallery</title>
     <link rel="icon" href="/favicon.ico" />
-    <style>
-      body {
-        font-family: sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #fff;
-      }
-      main {
-        padding: 20px;
-        text-align: center;
-      }
-      img {
-        max-width: 300px;
-        margin: 10px;
-        border: 2px solid #ccc;
-      }
-    </style>
   </head>
-  <body>
+  <body class="min-h-screen flex flex-col bg-white">
     <Header />
 
-    <main>
-      <h2>Welcome to My Museum</h2>
-      <p>Here you can showcase your artworks.</p>
-
-      <h2>Gallery</h2>
-      <!-- 示例图片展示 -->
-      <img src="/images/artwork1.jpg" alt="Artwork 1" />
-      <img src="/images/artwork2.jpg" alt="Artwork 2" />
-      <img src="/images/artwork3.jpg" alt="Artwork 3" />
+    <main class="flex-1 max-w-6xl mx-auto px-4 py-12 w-full">
+      <section class="text-center mb-16">
+        <h2 class="text-4xl font-bold text-gray-800 mb-4">欢迎来到 Zoey 的艺术世界</h2>
+        <p class="text-lg text-gray-600">这里收录了Zoey每一天的创意作品</p>
+        <a href="/gallery" class="inline-block mt-6 px-8 py-3 bg-pink-500 text-white rounded-full hover:bg-pink-600 transition-colors">
+          查看作品集
+        </a>
+      </section>
     </main>
 
     <Footer />
