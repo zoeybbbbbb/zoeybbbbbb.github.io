@@ -11,8 +11,7 @@
     "prebuild": "python3 scripts/generate-thumbs.py",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro",
-    "install:force": "npm install --legacy-peer-deps"
+    "astro": "astro"
   },
   "overrides": {
     "astro": "$astro"
@@ -20,7 +19,6 @@
   "dependencies": {
     "@astrojs/react": "^5.0.0",
     "@astrojs/tailwind": "^6.0.2",
-    "@tailwindcss/vite": "^4.2.1",
     "astro": "^6.0.4",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
