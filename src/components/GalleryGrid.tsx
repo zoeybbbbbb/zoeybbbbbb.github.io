@@ -4,6 +4,7 @@ import Lightbox from './Lightbox';
 interface Artwork {
   title: string;
   src: string;
+  thumb: string;
   type: 'image' | 'video';
   category: string;
 }
@@ -80,9 +81,11 @@ export default function GalleryGrid({ artworks, categories }: GalleryGridProps) 
               />
             ) : (
               <img
-                src={artwork.src}
+                src={artwork.thumb}
                 alt={artwork.title}
                 className="w-full h-full object-cover"
+                loading="lazy"
+                decoding="async"
                 onError={(e) => {
                   e.currentTarget.style.display = 'none';
                   e.currentTarget.parentElement!.innerHTML = `<div class="w-full h-full flex items-center justify-center text-gray-400 text-sm p-4 text-center">${artwork.title}</div>`;

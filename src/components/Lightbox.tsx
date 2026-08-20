@@ -1,8 +1,9 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 
 interface Artwork {
   title: string;
   src: string;
+  thumb: string;
   type: 'image' | 'video';
   category: string;
 }
@@ -18,6 +19,13 @@ interface LightboxProps {
 export default function Lightbox({ artwork, currentIndex, onClose, onNavigate, artworks }: LightboxProps) {
   const hasPrev = currentIndex > 0;
   const hasNext = currentIndex < artworks.length - 1;
+
+  // 原图较大，加载完成前先顶着缩略图，避免黑屏
+  const [fullLoaded, setFullLoaded] = useState(false);
+
+  useEffect(() => {
+    setFullLoaded(false);
+  }, [artwork.src]);
 
   const handlePrev = useCallback(() => {
     if (hasPrev) onNavigate(currentIndex - 1);
@@ -89,11 +97,31 @@ export default function Lightbox({ artwork, currentIndex, onClose, onNavigate, a
             className="max-w-full max-h-[90vh] rounded-lg"
           />
         ) : (
-          <img
-            src={artwork.src}
-            alt={artwork.title}
-            className="max-w-full max-h-[90vh] object-contain rounded-lg"
-          />
+          <div className="relative">
+            {/* 缩略图网格里已经加载过，这里立刻就有画面；它同时撑开布局尺寸 */}
+            <img
+              src={artwork.thumb}
+              alt=""
+              aria-hidden="true"
+              className={`max-w-full max-h-[90vh] object-contain rounded-lg ${
+                fullLoaded ? 'invisible' : 'blur-lg'
+              }`}
+            />
+            <img
+              src={artwork.src}
+              alt={artwork.title}
+              onLoad={() => setFullLoaded(true)}
+              onError={() => setFullLoaded(true)}
+              className={`absolute inset-0 w-full h-full object-contain rounded-lg transition-opacity duration-500 ${
+                fullLoaded ? 'opacity-100' : 'opacity-0'
+              }`}
+            />
+            {!fullLoaded && (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-full border-2 border-white/30 border-t-white/90 animate-spin" />
+              </div>
+            )}
+          </div>
         )}
       </div>
 
